@@ -93,14 +93,13 @@ int main(){
     
     printf("\nIntrodueix un NIU (valid siusplau):\n");
     scanf("%d",&NIUBuscat);
-    printf("Inici de la cerca del NIU %d\n",NIUBuscat);
     indexBuscat = cercabinarianiu(indexniu, num_lin, NIUBuscat);
 
     if (indexBuscat == NULL){
-        printf("No s'ha trobat un alumne amb niu %d a la llista.\n", NIUBuscat);
+        printf("No s'ha trobat un alumne amb NIU %d a la llista.\n", NIUBuscat);
     }
     else{
-        printf("Les dades de l'alumne amb niu %d son:",NIUBuscat);
+        printf("Les dades de l'alumne amb niu %d son:\n",NIUBuscat);
         printf("%d | ",indexBuscat->niu);
         for(i=0;i<4;i++){
             printf("%5.1f",indexBuscat->notes[i]);
@@ -165,7 +164,7 @@ void imprimirtaula(int num_lin, Alu *alumnes){
 
 void imprimirdesdindex(int num_lin, Alu **alumnes){
     int i,j;
-    for (j=0;j<10;j++){
+    for (j=0;j<num_lin;j++){
         printf("%d | ",alumnes[j]->niu);
         for(i=0;i<4;i++){
             printf("%5.1f",alumnes[j]->notes[i]);
@@ -176,8 +175,7 @@ void imprimirdesdindex(int num_lin, Alu **alumnes){
 }
 
 Alu * cercabinarianiu(Alu ** index, int num_lin, int NIU){
-    int m, a=0, b=num_lin, niua=(index[a]->niu) , niub=(index[b]->niu), nium;
-    printf("Inici de la cerca del NIU %d",NIU);
+    int m, a=0, b=(num_lin-1), niua=(index[a]->niu) , niub=(index[b]->niu), nium;
     if (niua == NIU) return index[a];
     if (niub == NIU) return index[b];
 
@@ -188,7 +186,7 @@ Alu * cercabinarianiu(Alu ** index, int num_lin, int NIU){
         if (nium == NIU) return index[m];
         if (NIU < nium) b = m;
         else a = m;
-    }while(a < b);
+    }while(a < b && m != a);
 
     return NULL;
 }
