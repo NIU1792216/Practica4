@@ -69,6 +69,8 @@ int main(){
     }
     printf("\n");
 
+    // Aqui comenca el codi nou de la practica a main
+
     printf("\nLa llista sense ordenar es:\n");
     imprimirtaula(num_lin, alumnes);
     qsort(alumnes, num_lin, sizeof(Alu), comparaciomitjana);
@@ -85,10 +87,6 @@ int comparacio (const void * a, const void * b) {
 int comparaciomitjana (const void * a, const void * b){
     if (((Alu *) a)->notes[4] > ((Alu *)b)->notes[4]) return 1;
     else return -1;
-}
-
-void LlegirAlumnes(char * nomFitxer){
-    
 }
 
 float mitjana(float dades[],int n){

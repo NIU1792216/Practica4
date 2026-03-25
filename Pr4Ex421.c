@@ -17,11 +17,13 @@ int comparacio (const void * a, const void * b);
 void LlegirAlumnes(char * nomFitxer);
 int comparaciomitjana (const void * a, const void * b);
 int comparacioniu (const void * a, const void * b);
+int comparacioapartirdindex(const void * a, const void * b);
 void imprimirtaula(int num_lin, Alu *alumnes);
+void imprimirdesdindex(int num_lin, Alu **alumnes);
 
 int main(){
     FILE *dades;
-    Alu *alumnes;
+    Alu *alumnes, **indexmitjanes;
     int n, i, ll, num_lin = 0, lrg = 0;
 
     // Obrim el fitxer Llista.txt
@@ -43,6 +45,10 @@ int main(){
         printf("Error: no hi ha espai suficient en la memoria.");
         return 2;
     }
+    if ((indexmitjanes = (Alu **)malloc(sizeof(Alu *)*num_lin)) == NULL){
+        printf("Error: no hi ha espai suficient en la memoria.");
+        return 2;
+    }
     
     // Llegim el document i guardem les dades en les estructures Alu.
     while(!(fscanf(dades,"%i;",&n)==EOF)){
@@ -52,6 +58,7 @@ int main(){
             fgetc(dades);//llegeix i descarta els ; i el \n
         }
         alumnes[lrg].notes[4]=mitjana(alumnes[lrg].notes,4);
+        indexmitjanes[lrg] = alumnes + lrg;
         lrg++;
     }
     fclose(dades);
@@ -70,20 +77,15 @@ int main(){
     }
     printf("\n");
 
-    // Aqui comenca el codi nou de la practica a main
-
     printf("\nLa llista sense ordenar es:\n");
-    imprimirtaula(num_lin, alumnes);
-
-    qsort(alumnes, num_lin, sizeof(Alu), comparaciomitjana);
-    printf("\nLa llista ordenada per mitjana es:\n");
-    imprimirtaula(num_lin, alumnes);
-
-    qsort(alumnes, num_lin, sizeof(Alu), comparacioniu);
-    printf("\nLa llista ordenada per niu es:\n");
-    imprimirtaula(num_lin, alumnes);
-
-
+    imprimirdesdindex(num_lin, indexmitjanes);
+    qsort(indexmitjanes, num_lin, sizeof(Alu *), comparacioapartirdindex);
+    printf("\nLa llista ordenada es:\n");
+    imprimirdesdindex(num_lin, indexmitjanes);
+    
+    // Alliberem memoria
+    free(alumnes);
+    free(indexmitjanes);
     return 0;
 }
 
@@ -102,8 +104,9 @@ int comparacioniu (const void * a, const void * b){
     else return -1;
 }
 
-void LlegirAlumnes(char * nomFitxer){
-    
+int comparacioapartirdindex(const void * a, const void * b){
+    if ((*((Alu **) a))->notes[4] > (*((Alu **)b))->notes[4]) return 1;
+    else return -1;
 }
 
 float mitjana(float dades[],int n){
@@ -127,4 +130,16 @@ void imprimirtaula(int num_lin, Alu *alumnes){
             printf(" |%6.2f",alumnes[j].notes[4]);
             printf("\n");
         }
+}
+
+void imprimirdesdindex(int num_lin, Alu **alumnes){
+    int i,j;
+    for (j=0;j<num_lin;j++){
+        printf("%d | ",alumnes[j]->niu);
+        for(i=0;i<4;i++){
+            printf("%5.1f",alumnes[j]->notes[i]);
+        }
+        printf(" |%6.2f",alumnes[j]->notes[4]);
+        printf("\n");
+    }
 }
