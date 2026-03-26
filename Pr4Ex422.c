@@ -88,11 +88,17 @@ int main(){
     printf("\nLa llista sense ordenar es:\n");
     imprimirdesdindex(num_lin, indexmitjanes);
     qsort(indexmitjanes, num_lin, sizeof(Alu *), comparacioapartirdindex);
-    printf("\nLa llista ordenada es:\n");
+    printf("\nLa llista ordenada per mitjana es:\n");
     imprimirdesdindex(num_lin, indexmitjanes);
-    
-    printf("\nIntrodueix un NIU (valid siusplau):\n");
+    printf("\nLa llista ordenada per niu es:\n");
+    imprimirdesdindex(num_lin, indexniu);
+
+    printf("\nIntrodueix un NIU:\n");
     scanf("%d",&NIUBuscat);
+        while (NIUBuscat < 1000000 || NIUBuscat > 9999999){
+            printf("\nEl NIU ha de ser un numero de 7 digits. Torna a introduir un NIU:\n");
+            scanf("%d",&NIUBuscat);
+    }
     indexBuscat = cercabinarianiu(indexniu, num_lin, NIUBuscat);
 
     if (indexBuscat == NULL){
@@ -176,17 +182,18 @@ void imprimirdesdindex(int num_lin, Alu **alumnes){
 
 Alu * cercabinarianiu(Alu ** index, int num_lin, int NIU){
     int m, a=0, b=(num_lin-1), niua=(index[a]->niu) , niub=(index[b]->niu), nium;
+    
     if (niua == NIU) return index[a];
-    if (niub == NIU) return index[b];
+    else if (niub == NIU) return index[b];
 
-    do{
-        m = (a+b)/2;
+    while(a <= b) {
+        m = (a + b)/2;
         nium = index[m]->niu;
 
         if (nium == NIU) return index[m];
-        if (NIU < nium) b = m;
-        else a = m;
-    }while(a < b && m != a);
+        else if (NIU < nium) b = m - 1;
+        else a = m + 1;
+    } 
 
     return NULL;
 }
