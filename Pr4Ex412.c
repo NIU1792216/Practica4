@@ -102,10 +102,6 @@ int comparacioniu (const void * a, const void * b){
     else return -1;
 }
 
-void LlegirAlumnes(char * nomFitxer){
-    
-}
-
 float mitjana(float dades[],int n){
     int i;
     float m=0.;
