@@ -95,9 +95,9 @@ int main(){
 
     printf("\nIntrodueix un NIU:\n");
     scanf("%d",&NIUBuscat);
-        while (NIUBuscat < 1000000 || NIUBuscat > 9999999){
-            printf("\nEl NIU ha de ser un numero de 7 digits. Torna a introduir un NIU:\n");
-            scanf("%d",&NIUBuscat);
+    while (NIUBuscat < 1000000 || NIUBuscat > 9999999){
+        printf("\nEl NIU ha de ser un numero de 7 digits. Torna a introduir un NIU:\n");
+        scanf("%d",&NIUBuscat);
     }
     indexBuscat = cercabinarianiu(indexniu, num_lin, NIUBuscat);
 
@@ -186,14 +186,14 @@ Alu * cercabinarianiu(Alu ** index, int num_lin, int NIU){
     if (niua == NIU) return index[a];
     else if (niub == NIU) return index[b];
 
-    while(a <= b) {
+    do {
         m = (a + b)/2;
         nium = index[m]->niu;
 
         if (nium == NIU) return index[m];
         else if (NIU < nium) b = m - 1;
-        else a = m + 1;
-    } 
+        else a = m ;
+    } while(a < b && !(a == m));
 
     return NULL;
 }
