@@ -181,19 +181,19 @@ void imprimirdesdindex(int num_lin, Alu **alumnes){
 }
 
 Alu * cercabinarianiu(Alu ** index, int num_lin, int NIU){
-    int m, a=0, b=(num_lin-1), niua=(index[a]->niu) , niub=(index[b]->niu), nium;
+    int m, a=0, b=(num_lin-1), nium;
     
-    if (niua == NIU) return index[a];
-    else if (niub == NIU) return index[b];
+    //if (niua == NIU) return index[a];
+    //if (niub == NIU) return index[b];
 
     do {
         m = (a + b)/2;
         nium = index[m]->niu;
 
         if (nium == NIU) return index[m];
-        else if (NIU < nium) b = m - 1;
-        else a = m ;
-    } while(a < b && !(a == m));
+        if (nium < NIU) a = m + 1;
+        else b = m - 1;
+    } while(a <= b);
 
     return NULL;
 }
