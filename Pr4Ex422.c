@@ -14,7 +14,6 @@ typedef struct {
 
 float mitjana(float [],int );
 int comparacio (const void * a, const void * b);
-void LlegirAlumnes(char * nomFitxer);
 int comparaciomitjana (const void * a, const void * b);
 int comparacioniu (const void * a, const void * b);
 int comparacioapartirdindex(const void * a, const void * b);
